@@ -207,13 +207,20 @@ func (rf *Raft) Snapshot(index int, snapshot []byte) {
 // term. the third return value is true if this server believes it is
 // the leader.
 func (rf *Raft) Start(command interface{}) (int, int, bool) {
-	index := -1
-	term := -1
-	isLeader := true
-
 	// Your code here (PartB).
-
-	return index, term, isLeader
+	rf.mu.Lock()
+	defer rf.mu.Unlock()
+	if rf.role != Leader {
+		return 0, 0, false
+	}
+	rf.log = append(rf.log, LogEntry{
+		Term:         rf.currentTerm,
+		CommandValid: true,
+		Command:      command,
+	})
+	LOG(rf.me, rf.currentTerm, DLeader, "Leader accept log [%d]T%d",
+		len(rf.log)-1, rf.currentTerm)
+	return len(rf.log) - 1, rf.currentTerm, true
 }
 
 // the tester doesn't halt goroutines created by Raft after each test,
@@ -264,8 +271,8 @@ func Make(peers []*labrpc.ClientEnd, me int,
 	// 开头有一个空日志
 	rf.log = append(rf.log, LogEntry{})
 
-	rf.nextIndex = append(rf.nextIndex, len(rf.peers))
-	rf.matchIndex = append(rf.matchIndex, len(rf.peers))
+	rf.nextIndex = make([]int, len(rf.peers))
+	rf.matchIndex = make([]int, len(rf.peers))
 
 	rf.lastApplied = 0
 	rf.commmitIndex = 0

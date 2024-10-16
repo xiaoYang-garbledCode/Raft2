@@ -41,7 +41,7 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 	}
 
 	// 如果 prevLogIndex 大于 len(rf.log) 拒绝，follower的log太短
-	if args.PrevLogIndex > len(rf.log) {
+	if args.PrevLogIndex >= len(rf.log) {
 		LOG(rf.me, rf.currentTerm, DLog2, "<- S%d, Reject log, Follower'log too short",
 			args.LeaderId)
 		return
@@ -101,6 +101,12 @@ func (rf *Raft) startReplication(term int) bool {
 			rf.becomeFollowerLock(reply.Term)
 			return
 		}
+		if rf.contextLostLock(term, Leader) {
+			LOG(rf.me, rf.currentTerm, DLog, "->S%d, Context lost, T%d:Leader->T%d:%s",
+				peer, term, rf.currentTerm, rf.role)
+			return
+		}
+
 		// 处理replication的回复
 		// 日志复制不成功，在log里从 prevLog 开始往前找，
 		// 到 args 的 term 的第一条日志的index 给到 nextIndex[peer]
@@ -111,8 +117,8 @@ func (rf *Raft) startReplication(term int) bool {
 				idx--
 			}
 			rf.nextIndex[peer] = idx + 1
-			LOG(rf.me, rf.currentTerm, DVote,
-				"not match with S%d in %d%, try next=%d",
+			LOG(rf.me, rf.currentTerm, DLog,
+				"->S%s not match at %d%, try next=%d",
 				peer, args.PrevLogIndex, rf.nextIndex[peer])
 			return
 		}
