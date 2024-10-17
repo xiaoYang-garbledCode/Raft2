@@ -1,0 +1,267 @@
+000004 T0000 VOTE S0 -> become Candidate
+Test (PartB): rejoin of partitioned leader ...
+000006 T0000 VOTE S1 -> become Candidate
+000006 T0000 VOTE S2 -> become Candidate
+000008 T0001 VOTE S2 -> S0, Reject vote, Already vote to S2
+000009 T0001 VOTE S0 -> S2, Reject vote, Already vote to S0
+000009 T0001 VOTE S1 -> S0, Reject vote, Already vote to S1
+000009 T0001 VOTE S2 -> S1, Reject vote, Already vote to S2
+000010 T0001 VOTE S0 -> S1, Reject vote, Already vote to S0
+000010 T0001 VOTE S1 -> S2, Reject vote, Already vote to S1
+001883 T0001 VOTE S2 -> become Candidate
+001885 T0001 LOG1 S0 Candidate->Follower, For T1->T2
+001885 T0001 LOG1 S1 Candidate->Follower, For T1->T2
+001886 T0002 VOTE S0 -> S2, Vote granted
+001886 T0002 VOTE S1 -> S2, Vote granted
+001886 T0002 LOG1 S2 become Leader T2
+001887 T0002 VOTE S2 Lost Context, abort voteRequest from S0
+001888 T0002 LOG1 S1 Follower->Follower, For T2->T2
+001888 T0002 LOG2 S1 <- S2, append (0, 0]
+001889 T0002 LOG1 S0 Follower->Follower, For T2->T2
+001889 T0002 LOG2 S0 <- S2, append (0, 0]
+001889 T0002 DBUG S2 Match after sort: [0 0 0], majority[1]=0
+001890 T0002 DBUG S2 Match after sort: [0 0 0], majority[1]=0
+002043 T0002 LEAD S2 Leader accept log [1]T2
+003895 T0002 LOG1 S1 Follower->Follower, For T2->T2
+003897 T0002 LOG2 S1 <- S2, append (0, 1]
+003895 T0002 LOG1 S0 Follower->Follower, For T2->T2
+003898 T0002 LOG2 S0 <- S2, append (0, 1]
+003897 T0002 DBUG S2 Match after sort: [0 1 1], majority[1]=1
+003899 T0002 APLY S2 Leader update the commit 0->1
+003900 T0002 DBUG S2 Match after sort: [1 1 1], majority[1]=1
+003900 T0002 APLY S2 Apply log for [1, 1]
+005901 T0002 LOG1 S1 Follower->Follower, For T2->T2
+005902 T0002 LOG2 S1 <- S2, append (1, 1]
+005902 T0002 APLY S1 Follower accept log: (0,1]
+005901 T0002 LOG1 S0 Follower->Follower, For T2->T2
+005902 T0002 LOG2 S0 <- S2, append (1, 1]
+005902 T0002 APLY S0 Follower accept log: (0,1]
+005902 T0002 DBUG S2 Match after sort: [1 1 1], majority[1]=1
+005902 T0002 APLY S1 Apply log for [1, 1]
+005902 T0002 APLY S0 Apply log for [1, 1]
+005902 T0002 DBUG S2 Match after sort: [1 1 1], majority[1]=1
+007902 T0002 LOG1 S0 Follower->Follower, For T2->T2
+007902 T0002 LOG2 S0 <- S2, append (1, 1]
+007902 T0002 LOG1 S1 Follower->Follower, For T2->T2
+007903 T0002 LOG2 S1 <- S2, append (1, 1]
+007903 T0002 DBUG S2 Match after sort: [1 1 1], majority[1]=1
+007903 T0002 DBUG S2 Match after sort: [1 1 1], majority[1]=1
+009919 T0002 LOG1 S1 Follower->Follower, For T2->T2
+009919 T0002 LOG2 S1 <- S2, append (1, 1]
+009920 T0002 DBUG S2 Match after sort: [1 1 1], majority[1]=1
+009920 T0002 LOG1 S0 Follower->Follower, For T2->T2
+009920 T0002 LOG2 S0 <- S2, append (1, 1]
+009921 T0002 DBUG S2 Match after sort: [1 1 1], majority[1]=1
+011232 T0002 LEAD S2 Leader accept log [2]T2
+011233 T0002 LEAD S2 Leader accept log [3]T2
+011233 T0002 LEAD S2 Leader accept log [4]T2
+013819 T0002 VOTE S1 -> become Candidate
+013821 T0002 LOG1 S0 Follower->Follower, For T2->T3
+013821 T0003 VOTE S0 -> S1, Vote granted
+013822 T0003 LOG1 S1 become Leader T3
+013824 T0003 LOG1 S0 Follower->Follower, For T3->T3
+013824 T0003 LOG2 S0 <- S1, append (1, 1]
+013824 T0003 DBUG S1 Match after sort: [0 1 1], majority[1]=1
+014287 T0003 LEAD S1 Leader accept log [2]T3
+014478 T0002 VOTE S2 ->S1, sendApeendEntries Fail
+015828 T0003 LOG1 S0 Follower->Follower, For T3->T3
+015828 T0003 LOG2 S0 <- S1, append (1, 2]
+015829 T0003 DBUG S1 Match after sort: [0 2 2], majority[1]=2
+015829 T0003 APLY S1 Leader update the commit 1->2
+015829 T0003 APLY S1 Apply log for [2, 2]
+017833 T0003 LOG1 S0 Follower->Follower, For T3->T3
+017833 T0003 LOG2 S0 <- S1, append (2, 2]
+017833 T0003 APLY S0 Follower accept log: (1,2]
+017833 T0003 DBUG S1 Match after sort: [0 2 2], majority[1]=2
+017833 T0003 APLY S0 Apply log for [2, 2]
+019834 T0003 LOG1 S0 Follower->Follower, For T3->T3
+019834 T0003 LOG2 S0 <- S1, append (2, 2]
+019835 T0003 DBUG S1 Match after sort: [0 2 2], majority[1]=2
+021361 T0003 VOTE S1 ->S2, sendApeendEntries Fail
+021560 T0002 VOTE S2 ->S0, sendApeendEntries Fail
+021840 T0003 LOG1 S0 Follower->Follower, For T3->T3
+021841 T0003 LOG2 S0 <- S1, append (2, 2]
+021841 T0003 DBUG S1 Match after sort: [0 2 2], majority[1]=2
+022980 T0002 LEAD S2 Leader accept log [5]T2
+023071 T0002 VOTE S2 ->S0, sendApeendEntries Fail
+023948 T0003 LOG2 S0 <- S2, Reject log, Higher term, T2<T3
+023949 T0002 LOG1 S2 Leader->Follower, For T2->T3
+025540 T0003 VOTE S0 -> become Candidate
+025542 T0003 LOG1 S2 Follower->Follower, For T3->T4
+025542 T0004 VOTE S2 -> S0, Vote granted
+025543 T0004 LOG1 S0 become Leader T4
+025544 T0004 LOG1 S2 Follower->Follower, For T4->T4
+025544 T0004 LOG2 S2 <- S0, Reject log, term not match
+025545 T0004 LOG1 S0 ->S2 not match at 2, try next=1
+026129 T0004 VOTE S2 Lost Leader [2] to Follower[T4]
+027565 T0004 LOG1 S2 Follower->Follower, For T4->T4
+027565 T0004 LOG2 S2 <- S0, append (0, 2]
+027565 T0004 APLY S2 Follower accept log: (1,2]
+027566 T0004 DBUG S0 Match after sort: [0 2 2], majority[1]=2
+027566 T0004 APLY S2 Apply log for [2, 2]
+028504 T0004 VOTE S2 ->S0, sendApeendEntries Fail
+029581 T0004 LOG1 S2 Follower->Follower, For T4->T4
+029581 T0004 LOG2 S2 <- S0, append (2, 2]
+029582 T0004 DBUG S0 Match after sort: [0 2 2], majority[1]=2
+030541 T0003 VOTE S1 ->S2, sendApeendEntries Fail
+030984 T0003 VOTE S1 ->S2, sendApeendEntries Fail
+031583 T0004 LOG1 S2 Follower->Follower, For T4->T4
+031583 T0004 LOG2 S2 <- S0, append (2, 2]
+031584 T0004 DBUG S0 Match after sort: [0 2 2], majority[1]=2
+033365 T0004 VOTE S0 ->S1, sendApeendEntries Fail
+033592 T0004 LOG1 S2 Follower->Follower, For T4->T4
+033592 T0004 LOG2 S2 <- S0, append (2, 2]
+033592 T0004 DBUG S0 Match after sort: [0 2 2], majority[1]=2
+034943 T0004 VOTE S2 ->S1, sendApeendEntries Fail
+035137 T0004 VOTE S2 ->S0, sendApeendEntries Fail
+035597 T0004 LOG1 S2 Follower->Follower, For T4->T4
+035597 T0004 LOG2 S2 <- S0, append (2, 2]
+035598 T0004 DBUG S0 Match after sort: [0 2 2], majority[1]=2
+037601 T0004 LOG1 S2 Follower->Follower, For T4->T4
+037601 T0004 LOG2 S2 <- S0, append (2, 2]
+037602 T0004 DBUG S0 Match after sort: [0 2 2], majority[1]=2
+039148 T0003 VOTE S1 ->S0, sendApeendEntries Fail
+039604 T0004 LOG1 S2 Follower->Follower, For T4->T4
+039605 T0004 LOG2 S2 <- S0, append (2, 2]
+039605 T0004 DBUG S0 Match after sort: [0 2 2], majority[1]=2
+040341 T0003 VOTE S1 ->S2, sendApeendEntries Fail
+041611 T0004 LOG1 S2 Follower->Follower, For T4->T4
+041613 T0004 LOG2 S2 <- S0, append (2, 2]
+041614 T0004 DBUG S0 Match after sort: [0 2 2], majority[1]=2
+041629 T0004 VOTE S2 ->S1, sendApeendEntries Fail
+042901 T0004 VOTE S2 ->S0, sendApeendEntries Fail
+043040 T0004 LEAD S0 Leader accept log [3]T4
+043442 T0003 VOTE S1 ->S0, sendApeendEntries Fail
+043612 T0004 LOG1 S2 Follower->Follower, For T4->T4
+043612 T0004 LOG2 S2 <- S0, append (2, 3]
+043613 T0004 DBUG S0 Match after sort: [0 3 3], majority[1]=3
+043613 T0004 APLY S0 Leader update the commit 2->3
+043613 T0004 APLY S0 Apply log for [3, 3]
+045614 T0004 LOG1 S2 Follower->Follower, For T4->T4
+045614 T0004 LOG2 S2 <- S0, append (3, 3]
+045614 T0004 APLY S2 Follower accept log: (2,3]
+045614 T0004 DBUG S0 Match after sort: [0 3 3], majority[1]=3
+045615 T0004 APLY S2 Apply log for [3, 3]
+045780 T0003 LEAD S1 Leader accept log [3]T3
+045983 T0004 LOG2 S0 <- S1, Reject log, Higher term, T3<T4
+045984 T0003 LOG1 S1 Leader->Follower, For T3->T4
+045983 T0004 LOG2 S2 <- S1, Reject log, Higher term, T3<T4
+045984 T0004 LOG1 S1 ->S2, Context lost, T3:Leader->T4:Follower
+046728 T0004 VOTE S0 ->S1, sendApeendEntries Fail
+047004 T0004 VOTE S1 -> become Candidate
+047006 T0004 LOG1 S0 Leader->Follower, For T4->T5
+047006 T0005 VOTE S0 ->S1, Reject, Candidate is less update
+047006 T0004 LOG1 S2 Follower->Follower, For T4->T5
+047006 T0005 VOTE S2 ->S1, Reject, Candidate is less update
+047619 T0005 VOTE S0 Lost Leader [0] to Follower[T5]
+047699 T0005 VOTE S0 -> become Candidate
+047702 T0005 LOG1 S2 Follower->Follower, For T5->T6
+047702 T0006 VOTE S2 -> S0, Vote granted
+047702 T0005 LOG1 S1 Candidate->Follower, For T5->T6
+047702 T0006 VOTE S1 -> S0, Vote granted
+047703 T0006 LOG1 S0 become Leader T6
+047703 T0006 VOTE S0 Lost Context, abort voteRequest from S2
+047704 T0006 LOG1 S2 Follower->Follower, For T6->T6
+047705 T0006 LOG2 S2 <- S0, append (3, 3]
+047705 T0006 DBUG S0 Match after sort: [0 3 3], majority[1]=3
+047705 T0006 LOG1 S1 Follower->Follower, For T6->T6
+047706 T0006 LOG2 S1 <- S0, Reject log, term not match
+047707 T0006 LOG1 S0 ->S1 not match at 3, try next=1
+047987 T0006 VOTE S1 Lost Leader [1] to Follower[T6]
+048497 T0006 DBUG S1 Ask vote from S2, Lost or Error
+048579 T0006 VOTE S1 ->S2, sendApeendEntries Fail
+048715 T0006 VOTE S1 ->S0, sendApeendEntries Fail
+049711 T0006 LOG1 S2 Follower->Follower, For T6->T6
+049711 T0006 LOG2 S2 <- S0, append (3, 3]
+049711 T0006 LOG1 S1 Follower->Follower, For T6->T6
+049711 T0006 LOG2 S1 <- S0, append (0, 3]
+049712 T0006 APLY S1 Follower accept log: (2,3]
+049712 T0006 DBUG S0 Match after sort: [0 3 3], majority[1]=3
+049712 T0006 APLY S1 Apply log for [3, 3]
+049712 T0006 DBUG S0 Match after sort: [3 3 3], majority[1]=3
+050563 T0006 VOTE S2 ->S1, sendApeendEntries Fail
+051714 T0006 LOG1 S1 Follower->Follower, For T6->T6
+051714 T0006 LOG2 S1 <- S0, append (3, 3]
+051715 T0006 DBUG S0 Match after sort: [3 3 3], majority[1]=3
+051714 T0006 LOG1 S2 Follower->Follower, For T6->T6
+051715 T0006 LOG2 S2 <- S0, append (3, 3]
+051715 T0006 DBUG S0 Match after sort: [3 3 3], majority[1]=3
+053725 T0006 LOG1 S2 Follower->Follower, For T6->T6
+053726 T0006 LOG2 S2 <- S0, append (3, 3]
+053727 T0006 DBUG S0 Match after sort: [3 3 3], majority[1]=3
+053729 T0006 LOG1 S1 Follower->Follower, For T6->T6
+053729 T0006 LOG2 S1 <- S0, append (3, 3]
+053729 T0006 DBUG S0 Match after sort: [3 3 3], majority[1]=3
+054892 T0006 DBUG S0 Ask vote from S1, Lost or Error
+055738 T0006 LOG1 S1 Follower->Follower, For T6->T6
+055738 T0006 LOG2 S1 <- S0, append (3, 3]
+055738 T0006 LOG1 S2 Follower->Follower, For T6->T6
+055738 T0006 LOG2 S2 <- S0, append (3, 3]
+055739 T0006 DBUG S0 Match after sort: [3 3 3], majority[1]=3
+055739 T0006 DBUG S0 Match after sort: [3 3 3], majority[1]=3
+056814 T0006 VOTE S1 ->S0, sendApeendEntries Fail
+057368 T0006 VOTE S1 ->S2, sendApeendEntries Fail
+057728 T0006 VOTE S0 ->S1, sendApeendEntries Fail
+057749 T0006 LOG1 S2 Follower->Follower, For T6->T6
+057749 T0006 LOG2 S2 <- S0, append (3, 3]
+057750 T0006 LOG1 S1 Follower->Follower, For T6->T6
+057750 T0006 DBUG S0 Match after sort: [3 3 3], majority[1]=3
+057750 T0006 LOG2 S1 <- S0, append (3, 3]
+057750 T0006 DBUG S0 Match after sort: [3 3 3], majority[1]=3
+058987 T0006 VOTE S0 ->S1, sendApeendEntries Fail
+059750 T0006 LOG1 S2 Follower->Follower, For T6->T6
+059750 T0006 LOG2 S2 <- S0, append (3, 3]
+059751 T0006 DBUG S0 Match after sort: [3 3 3], majority[1]=3
+059751 T0006 LOG1 S1 Follower->Follower, For T6->T6
+059751 T0006 LOG2 S1 <- S0, append (3, 3]
+059751 T0006 DBUG S0 Match after sort: [3 3 3], majority[1]=3
+060398 T0006 VOTE S2 ->S0, sendApeendEntries Fail
+061578 T0006 VOTE S0 ->S1, sendApeendEntries Fail
+061751 T0006 LOG1 S2 Follower->Follower, For T6->T6
+061751 T0006 LOG2 S2 <- S0, append (3, 3]
+061752 T0006 LOG1 S1 Follower->Follower, For T6->T6
+061752 T0006 LOG2 S1 <- S0, append (3, 3]
+061752 T0006 DBUG S0 Match after sort: [3 3 3], majority[1]=3
+061753 T0006 DBUG S0 Match after sort: [3 3 3], majority[1]=3
+063433 T0006 VOTE S1 ->S2, sendApeendEntries Fail
+063473 T0006 VOTE S1 ->S0, sendApeendEntries Fail
+063765 T0006 LOG1 S2 Follower->Follower, For T6->T6
+063765 T0006 LOG2 S2 <- S0, append (3, 3]
+063765 T0006 LOG1 S1 Follower->Follower, For T6->T6
+063766 T0006 DBUG S0 Match after sort: [3 3 3], majority[1]=3
+063766 T0006 LOG2 S1 <- S0, append (3, 3]
+063766 T0006 DBUG S0 Match after sort: [3 3 3], majority[1]=3
+064486 T0006 VOTE S2 ->S1, sendApeendEntries Fail
+064725 T0006 VOTE S1 ->S0, sendApeendEntries Fail
+065778 T0006 LOG1 S1 Follower->Follower, For T6->T6
+065779 T0006 LOG2 S1 <- S0, append (3, 3]
+065779 T0006 DBUG S0 Match after sort: [3 3 3], majority[1]=3
+065778 T0006 LOG1 S2 Follower->Follower, For T6->T6
+065780 T0006 LOG2 S2 <- S0, append (3, 3]
+065781 T0006 DBUG S0 Match after sort: [3 3 3], majority[1]=3
+065814 T0006 VOTE S0 ->S1, sendApeendEntries Fail
+065914 T0006 LEAD S0 Leader accept log [4]T6
+066341 T0006 VOTE S1 ->S0, sendApeendEntries Fail
+067323 T0006 VOTE S1 ->S2, sendApeendEntries Fail
+067783 T0006 LOG1 S2 Follower->Follower, For T6->T6
+067784 T0006 LOG2 S2 <- S0, append (3, 4]
+067784 T0006 LOG1 S1 Follower->Follower, For T6->T6
+067784 T0006 LOG2 S1 <- S0, append (3, 4]
+067784 T0006 DBUG S0 Match after sort: [3 4 4], majority[1]=4
+067784 T0006 APLY S0 Leader update the commit 3->4
+067784 T0006 APLY S0 Apply log for [4, 4]
+067784 T0006 DBUG S0 Match after sort: [4 4 4], majority[1]=4
+069164 T0006 VOTE S1 ->S2, sendApeendEntries Fail
+069798 T0006 LOG1 S2 Follower->Follower, For T6->T6
+069798 T0006 LOG2 S2 <- S0, append (4, 4]
+069798 T0006 APLY S2 Follower accept log: (3,4]
+069798 T0006 LOG1 S1 Follower->Follower, For T6->T6
+069798 T0006 LOG2 S1 <- S0, append (4, 4]
+069798 T0006 APLY S1 Follower accept log: (3,4]
+069799 T0006 DBUG S0 Match after sort: [4 4 4], majority[1]=4
+069799 T0006 APLY S2 Apply log for [4, 4]
+069799 T0006 APLY S1 Apply log for [4, 4]
+069799 T0006 DBUG S0 Match after sort: [4 4 4], majority[1]=4
+  ... Passed --   7.0  3  120   29971    4
+PASS
+ok  	course/raft	6.994s
